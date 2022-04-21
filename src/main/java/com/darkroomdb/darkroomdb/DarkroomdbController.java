@@ -16,6 +16,9 @@ public class DarkroomdbController {
     @Autowired
     FilmRepository filmRepository;
 
+    @Autowired
+    RatingRepository ratingRepository;
+
     @GetMapping("/film")
     public ResponseEntity<List<Film>> getAllFilm() {
         return ResponseEntity.status(HttpStatus.OK).body(filmRepository.findAll());
@@ -41,6 +44,15 @@ public class DarkroomdbController {
         }
         filmRepository.save(film);
         return ResponseEntity.status(HttpStatus.CREATED).body("Film added");
+    }
+
+    @PostMapping("/film/{id}")
+    public ResponseEntity<String> addRatingToFilm(@PathVariable String id, @RequestBody float newRating) {
+        Film film = filmRepository.findById(Integer.valueOf(id)).orElse(null);
+        if (film == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Film does not exist - cannot add rating!");
+        Rating rating = new Rating(newRating, film);
+        ratingRepository.save(rating);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Rating added");
     }
 
     @DeleteMapping("/film/{id}")

@@ -17,6 +17,11 @@ public class Rating {
 
     public Rating() {}
 
+    public Rating(float rating, Film film) {
+        this.rating = rating;
+        this.film = film;
+    }
+
     public int getRatingId() {
         return ratingId;
     }
