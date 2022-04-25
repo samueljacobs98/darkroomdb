@@ -1,4 +1,4 @@
-# darkroomdb
+# Darkroomdb
 
 ## Project Overview
 
